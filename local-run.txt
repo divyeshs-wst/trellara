@@ -1,0 +1,5 @@
+How to run on local with preview:
+
+- shopify theme dev --theme-editor-sync  dev-app-store-addjzrig.myshopify.com
+
+- shopify theme dev --theme-editor-sync

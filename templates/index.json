@@ -78,10 +78,22 @@
       ],
       "name": "Row",
       "settings": {
-        "layout": "flex",
         "html_tag": "section",
+        "layout": "flex",
+        "direction": "row",
+        "justify_content": "space-between",
+        "align_items": "stretch",
+        "row_gap": 32,
+        "column_gap": 60,
+        "wrap": false,
         "content_width": "boxed",
-        "content_max_width": 1200
+        "content_max_width": 1200,
+        "content_min_height": 100,
+        "background_type": "color",
+        "background_color": "#e2c0c0",
+        "background_size": "cover",
+        "background_position": "center center",
+        "background_opacity": 100
       }
     },
     "section_NHtnER": {
@@ -153,10 +165,23 @@
       ],
       "name": "Row",
       "settings": {
-        "layout": "block",
         "html_tag": "section",
+        "layout": "block",
+        "direction": "row",
+        "justify_content": "space-between",
+        "align_items": "stretch",
+        "row_gap": 0,
+        "column_gap": 0,
+        "wrap": false,
         "content_width": "boxed",
-        "content_max_width": 1200
+        "content_max_width": 1200,
+        "content_min_height": 150,
+        "background_type": "image",
+        "background_color": "rgba(0,0,0,0)",
+        "background_image": "shopify://shop_images/Cream_Image_9_option1.webp",
+        "background_size": "cover",
+        "background_position": "center center",
+        "background_opacity": 100
       }
     }
   },

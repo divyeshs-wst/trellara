@@ -1,13 +1,18 @@
 /** Critical CSS for the theme. This file is included on every page. */
 
 /* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
+:root {
+  --wst-content-width: 1200px;
+  --wst-bg-image: auto;
+  --wst-min-height: auto;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
-}
-
-:root {
-  --wst-boxed-width: 1200px;
+  background-color: var(--wst-bg-color, transparent);
+  overflow: var(--wst-bg-image, auto);
+  min-height: var(--wst-min-height, auto);
 }
 
 body {
@@ -51,6 +56,7 @@ dialog {
 p {
   text-wrap: pretty;
 }
+
 p,
 h1,
 h2,
@@ -66,12 +72,12 @@ p:empty {
 }
 
 :is(p, h1, h2, h3, h4, h5, h6):first-child,
-:empty:first-child + :where(p, h1, h2, h3, h4, h5, h6) {
+:empty:first-child+ :where(p, h1, h2, h3, h4, h5, h6) {
   margin-block-start: 0;
 }
 
 :is(p, h1, h2, h3, h4, h5, h6):last-child,
-:where(p, h1, h2, h3, h4, h5, h6) + :has(+ :empty:last-child) {
+:where(p, h1, h2, h3, h4, h5, h6)+ :has(+ :empty:last-child) {
   margin-block-end: 0;
 }
 
@@ -83,15 +89,41 @@ body {
 }
 
 /** Section layout utilities */
-.tr-f {
+.tr-section {
+  position: relative;
+}
+
+.tr-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: var(--wst-direction, row);
+  justify-content: var(--wst-justify-content, flex-start);
+  align-items: var(--wst-align-items, stretch);
+  flex-wrap: var(--wst-flex-wrap, nowrap);
+  row-gap: var(--wst-row-gap, 0px);
+  column-gap: var(--wst-column-gap, 0px);
 }
 
 .tr-full {
   width: 100%;
   margin: 0 auto;
 }
+
 .tr-boxed {
-  max-width: var( --wst-boxed-width, 1200px);
+  max-width: var(--wst-boxed-width, 1200px);
+}
+
+.tr-col {
+  width: 50%;
+}
+
+.tr-section__background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width:100%;
+  height:100%;
+  object-fit:var(--wst-bg-image-fit, cover);
+  object-position:var(--wst-bg-image-position, center center);
+  opacity:var(--wst-bg-image-opacity, 1);
+  z-index:var(--wst-z-index, auto);
 }

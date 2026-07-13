@@ -2,47 +2,97 @@
   assign settings = section.settings
   assign tag = settings.html_tag | default: 'div'
 
-  assign layout = 'tr-f'
-  if settings.layout == 'block'
-    assign layout = 'tr-block'
+  # Layout class
+  assign layout_class = 'tr-block'
+
+  if settings.layout == 'flex'
+    assign layout_class = 'tr-flex'
   endif
 
-  # Inner container, boxed or full width
-  assign inner_class = 'tr-full'
+  # Container class
+  assign container_class = 'tr-full'
+
   if settings.content_width == 'boxed'
-    assign inner_class = inner_class | append: ' tr-boxed'
+    assign container_class = container_class | append: ' tr-boxed'
   endif
 
-  # Widget specific style variables, passed to wst-attributes
-  capture row_vars
+  # Dynamic CSS variables
+ capture row_vars
+  if settings.layout == 'flex'
     echo '--wst-direction: ' | append: settings.direction | append: ';'
+    echo '--wst-justify-content: ' | append: settings.justify_content | append: ';'
+    echo '--wst-align-items: ' | append: settings.align_items | append: ';'
+
     if settings.wrap
       echo '--wst-flex-wrap: wrap;'
+    else
+      echo '--wst-flex-wrap: nowrap;'
     endif
-    echo '--wst-justify: ' | append: settings.justify | append: ';'
-    echo '--wst-align-items: ' | append: settings.align_items | append: ';'
-    if settings.gap_row > 0
-      echo '--wst-gap-row: ' | append: settings.gap_row | append: 'px;'
+
+    # Row gap
+    if settings.row_gap > 0
+      echo '--wst-row-gap: ' | append: settings.row_gap | append: 'px;'
     endif
-    if settings.gap_column > 0
-      echo '--wst-gap-col: ' | append: settings.gap_column | append: 'px;'
+
+    # Column gap
+    if settings.column_gap > 0
+      echo '--wst-column-gap: ' | append: settings.column_gap | append: 'px;'
     endif
-    if settings.content_width == 'boxed'
-      echo '--wst-boxed-width: ' | append: settings.content_max_width | append: 'px;'
+
+  endif
+
+  # Boxed width
+  if settings.content_width == 'boxed'
+    echo '--wst-max-width: ' | append: settings.content_max_width | append: 'px;'
+  endif
+
+  # Background
+  if settings.background_type == 'color'
+    echo '--wst-bg-color: ' | append: settings.background_color | append: ';'
+  endif
+
+  if settings.background_type == 'image'
+    if settings.background_image != blank
+      echo '--wst-bg-image: url(' | append: settings.background_image | append: ');'
     endif
-  endcapture
+  endif
+endcapture
+
+capture image_style
+  if settings.background_type == 'image'
+    echo '--wst-bg-image-fit: ' | append: settings.background_size | append: ';'
+    echo '--wst-bg-image-position: ' | append: settings.background_position | append: ';'
+
+    assign image_opacity = settings.background_opacity | divided_by: 100.0
+    echo '--wst-bg-image-opacity:' | append: image_opacity | append: ';'
+    echo '--wst-z-index: ' | append: '-1' | append: ';'
+  endif
+endcapture
+
+capture tr_section_vars
+  echo '--wst-min-height: ' | append: settings.content_min_height | append: 'px;'
+endcapture
 -%}
 
-<{{ tag }} class="tr-section {{ inner_class }}" style="{{ row_vars | strip }}">
-  {% if section.settings.background_image %}
-    <div class="tr-section__background">
-      {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
-    </div>
+<{{ tag }} class="tr-section" style="{{ tr_section_vars | strip }}">
+  {% if settings.background_image != blank %}
+    {{
+      settings.background_image
+      | image_url: width: 2000
+      | image_tag: class: 'tr-section__background',
+      loading: 'lazy',
+      widths: '400, 600, 800, 1200, 1600, 2000',
+      alt: settings.background_image.alt,
+      style: image_style | strip
+    }}
   {% endif %}
-  <div class="{{ layout }} tr_row {{ row_classes }}">
-    {% content_for 'blocks' %}
+
+  <div class="{{ container_class }}" >
+    <div class="{{ layout_class }} tr-row" style="{{ row_vars | strip }}">
+      {% content_for 'blocks' %}
+    </div>
   </div>
-</{{tag}}>
+</{{ tag }}>
 
 {% schema %}
 {
@@ -149,8 +199,58 @@
           "label": "Space Evenly"
         }
       ],
-      "default": "justify_content",
+      "default": "space-between",
       "info": "Applies to flexible layout.",
+      "visible_if": "{{ section.settings.layout == 'flex' }}"
+    },
+    {
+      "type": "select",
+      "id": "align_items",
+      "label": "Align Items",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "stretch",
+          "label": "Stretch"
+        }
+      ],
+      "default": "stretch",
+      "info": "Applies to flexible layout.",
+      "visible_if": "{{ section.settings.layout == 'flex' }}"
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Row Gap",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "info": "Controls vertical spacing between rows in flexible layout.",
+      "visible_if": "{{ section.settings.layout == 'flex' }}"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column Gap",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "info": "Controls horizontal spacing between columns in flexible layout.",
       "visible_if": "{{ section.settings.layout == 'flex' }}"
     },
     {
@@ -189,9 +289,120 @@
       "visible_if": "{{ section.settings.content_width == 'boxed' }}"
     },
     {
+      "type": "number",
+      "id": "content_min_height",
+      "label": "Minimum height",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.background_type == 'color' }}"
+    },
+    {
       "type": "image_picker",
       "id": "background_image",
-      "label": "t:labels.background"
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "background_size",
+      "label": "Image Fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "fill",
+          "label": "Fill"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Image Position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "center top",
+          "label": "Top Center"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "left center",
+          "label": "Left Center"
+        },
+        {
+          "value": "right center",
+          "label": "Right Center"
+        },
+        {
+          "value": "left top",
+          "label": "Left Top"
+        },
+        {
+          "value": "right top",
+          "label": "Right Top"
+        },
+        {
+          "value": "left bottom",
+          "label": "Left Bottom"
+        },
+        {
+          "value": "right bottom",
+          "label": "Right Bottom"
+        }
+      ],
+      "default": "center center",
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "label": "Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
     }
   ],
   "presets": [
