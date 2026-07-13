@@ -1,11 +1,3 @@
-{% comment %}
-  This section is used in the list-collections template to render a list of
-  collections.
-{
-  "name": "t:general.collections_grid",
-  "tag": null,
-  "settings": []
-}
 <h1>{{ 'collections.title' | t }}</h1>
 
 <div
@@ -36,35 +28,44 @@
 </div>
 
 {% stylesheet %}
-  .collections {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
-    gap: var(--grid-gap);
-  }
-  .collections--compact {
-    --collection-card-size: 160px;
-  }
-  .collections--full {
-    --collection-card-size: 280px;
-  }
-  .collection-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+.collections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
+  gap: var(--grid-gap);
+}
+
+.collections--compact {
+  --collection-card-size: 160px;
+}
+
+.collections--full {
+  --collection-card-size: 280px;
+}
+
+.collection-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.collections_grid",
+  "name": "Collections",
   "settings": [
     {
       "type": "select",
       "id": "grid_item_width",
       "label": "t:labels.grid_item_width",
       "options": [
-        { "value": "collections--compact", "label": "t:options.size.small" },
-        { "value": "collections--full", "label": "t:options.size.large" }
+        {
+          "value": "collections--compact",
+          "label": "t:options.size.small"
+        },
+        {
+          "value": "collections--full",
+          "label": "t:options.size.large"
+        }
       ],
       "default": "collections--full"
     },
@@ -79,6 +80,10 @@
       "default": 10
     }
   ],
-  "presets": [{ "name": "t:general.collections_grid" }]
+  "presets": [
+    {
+      "name": "Collections"
+    }
+  ]
 }
 {% endschema %}
