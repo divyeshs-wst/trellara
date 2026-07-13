@@ -6,6 +6,10 @@
   margin: 0;
 }
 
+:root {
+  --wst-boxed-width: 1200px;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -79,3 +83,15 @@ body {
 }
 
 /** Section layout utilities */
+.tr-f {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tr-full {
+  width: 100%;
+  margin: 0 auto;
+}
+.tr-boxed {
+  max-width: var( --wst-boxed-width, 1200px);
+}
