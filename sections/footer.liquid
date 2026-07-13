@@ -4,11 +4,10 @@
     {{ 'now' | date: '%Y' }}
     {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
   </div>
-{
-  "name": "t:general.footer",
-  "tag": null,
-  "settings": []
-}
+
+  <div class="footer__links">
+    {% for link in section.settings.menu.links %}
+      {{ link.title | link_to: link.url }}
     {% endfor %}
   </div>
 

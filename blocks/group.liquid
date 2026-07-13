@@ -61,7 +61,6 @@
       ]
     },
     {
-      "visible_if": "block.settings.layout_direction == 'group--vertical'",
       "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
@@ -70,7 +69,8 @@
         { "value": "flex-start", "label": "t:options.alignment.left" },
         { "value": "center", "label": "t:options.alignment.center" },
         { "value": "flex-end", "label": "t:options.alignment.right" }
-      ]
+      ],
+      "visible_if": "{{ block.settings.layout_direction == 'group--vertical' }}"
     },
     {
       "type": "range",
