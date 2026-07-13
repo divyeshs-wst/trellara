@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
-    },
     "custom_section_JJ8zGJ": {
       "type": "custom-section",
       "blocks": {
@@ -85,19 +81,9 @@
       ],
       "name": "t:general.custom_section",
       "settings": {}
-    },
-    "collections_WEj44M": {
-      "type": "collections",
-      "name": "t:general.collections_grid",
-      "settings": {
-        "grid_item_width": "collections--full",
-        "grid_gap": 10
-      }
     }
   },
   "order": [
-    "main",
-    "custom_section_JJ8zGJ",
-    "collections_WEj44M"
+    "custom_section_JJ8zGJ"
   ]
 }
