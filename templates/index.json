@@ -83,9 +83,85 @@
         "content_width": "boxed",
         "content_max_width": 1200
       }
+    },
+    "section_NHtnER": {
+      "type": "section",
+      "blocks": {
+        "group_xJMWrX": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "flex-start",
+            "padding": 0
+          },
+          "blocks": {
+            "text_nNjtYT": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "This is Dummy Text 1.",
+                "text_style": "text--title",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "text_VtqayB": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "This is Dummy Text 1.",
+                "text_style": "text--title",
+                "alignment": "left"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_nNjtYT",
+            "text_VtqayB"
+          ]
+        },
+        "group_mLKeLc": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "center",
+            "padding": 0
+          },
+          "blocks": {
+            "text_Vh4kGQ": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "This is Dummy Text 2.",
+                "text_style": "text--title",
+                "alignment": "left"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_Vh4kGQ"
+          ]
+        }
+      },
+      "block_order": [
+        "group_xJMWrX",
+        "group_mLKeLc"
+      ],
+      "name": "Row",
+      "settings": {
+        "layout": "block",
+        "html_tag": "section",
+        "content_width": "boxed",
+        "content_max_width": 1200
+      }
     }
   },
   "order": [
-    "custom_section_mc3TCa"
+    "custom_section_mc3TCa",
+    "section_NHtnER"
   ]
 }

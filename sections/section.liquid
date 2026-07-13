@@ -1,32 +1,23 @@
 {%- liquid
-  assign settings = block.settings
+  assign settings = section.settings
   assign tag = settings.html_tag | default: 'div'
 
-  # Modifier classes for layout behavior
-  assign row_classes = ''
-  if settings.layout == 'grid'
-    assign row_classes = row_classes | append: ' wst-row--grid'
-  endif
-  if settings.stack_on_mobile
-    assign row_classes = row_classes | append: ' wst-row--stack'
+  assign layout = 'tr-f'
+  if settings.layout == 'block'
+    assign layout = 'tr-block'
   endif
 
   # Inner container, boxed or full width
-  assign inner_class = 'wst-row__inner'
+  assign inner_class = 'tr-full'
   if settings.content_width == 'boxed'
-    assign inner_class = inner_class | append: ' wst-row__inner--boxed'
+    assign inner_class = inner_class | append: ' tr-boxed'
   endif
 
   # Widget specific style variables, passed to wst-attributes
   capture row_vars
-    if settings.layout == 'grid'
-      echo '--wst-cols: ' | append: settings.grid_columns | append: ';'
-      echo '--wst-cols-m: ' | append: settings.grid_columns_mobile | append: ';'
-    else
-      echo '--wst-direction: ' | append: settings.direction | append: ';'
-      if settings.wrap
-        echo '--wst-flex-wrap: wrap;'
-      endif
+    echo '--wst-direction: ' | append: settings.direction | append: ';'
+    if settings.wrap
+      echo '--wst-flex-wrap: wrap;'
     endif
     echo '--wst-justify: ' | append: settings.justify | append: ';'
     echo '--wst-align-items: ' | append: settings.align_items | append: ';'
@@ -37,23 +28,18 @@
       echo '--wst-gap-col: ' | append: settings.gap_column | append: 'px;'
     endif
     if settings.content_width == 'boxed'
-      echo '--wst-content-width: ' | append: settings.content_max_width | append: 'px;'
-    endif
-    if settings.min_height_type == 'custom'
-      echo '--wst-min-h: ' | append: settings.min_height | append: 'px;'
-    elsif settings.min_height_type == 'screen'
-      echo '--wst-min-h: 100svh;'
+      echo '--wst-boxed-width: ' | append: settings.content_max_width | append: 'px;'
     endif
   endcapture
 -%}
 
-<{{ tag }} class="wst-row{{ row_classes }}" style="{{ row_vars | strip }}">
+<{{ tag }} class="tr-section {{ inner_class }}" style="{{ row_vars | strip }}">
   {% if section.settings.background_image %}
     <div class="tr-section__background">
       {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
     </div>
   {% endif %}
-  <div class="tr_row">
+  <div class="{{ layout }} tr_row {{ row_classes }}">
     {% content_for 'blocks' %}
   </div>
 </{{tag}}>
@@ -63,22 +49,6 @@
   "name": "Row",
   "blocks": [{ "type": "@theme" }],
   "settings": [
-    {
-      "type": "select",
-      "id": "layout",
-      "label": "Layout",
-      "options": [
-        {
-          "value": "flex",
-          "label": "Flexible"
-        },
-        {
-          "value": "grid",
-          "label": "Grid"
-        }
-      ],
-      "default": "flex"
-    },
     {
       "type": "select",
       "id": "html_tag",
@@ -109,6 +79,90 @@
     },
     {
       "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "flex",
+          "label": "Flexible"
+        },
+        {
+          "value": "block",
+          "label": "Block"
+        }
+      ],
+      "default": "flex"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        {
+          "value": "row",
+          "label": "Row Horizontal"
+        },
+        {
+          "value": "column",
+          "label": "Column Vertical"
+        },
+        {
+          "value": "row-reverse",
+          "label": "Row reversed"
+        },
+        {
+          "value": "column-reverse",
+          "label": "Column reversed"
+        }
+      ],
+      "default": "row",
+      "info": "Applies to flexible layout.",
+      "visible_if": "{{ section.settings.layout == 'flex' }}"
+    },
+    {
+      "type": "select",
+      "id": "justify_content",
+      "label": "Justify Content",
+      "options": [
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        },
+        {
+          "value": "space-between",
+          "label": "Space Between"
+        },
+        {
+          "value": "space-around",
+          "label": "Space Around"
+        },
+        {
+          "value": "space-evenly",
+          "label": "Space Evenly"
+        }
+      ],
+      "default": "justify_content",
+      "info": "Applies to flexible layout.",
+      "visible_if": "{{ section.settings.layout == 'flex' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "wrap",
+      "label": "Allow items to wrap",
+      "default": false,
+      "info": "Applies to flexible layout.",
+      "visible_if": "{{ section.settings.layout == 'flex' }}"
+    },
+    {
+      "type": "select",
       "id": "content_width",
       "label": "Content width",
       "options": [
@@ -128,11 +182,11 @@
       "id": "content_max_width",
       "label": "Boxed maximum width",
       "min": 600,
-      "max": 1600,
+      "max": 1980,
       "step": 20,
       "unit": "px",
       "default": 1200,
-      "visible_if": "{{ block.settings.content_width == 'boxed' }}"
+      "visible_if": "{{ section.settings.content_width == 'boxed' }}"
     },
     {
       "type": "image_picker",
