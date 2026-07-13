@@ -1,0 +1,32 @@
+{%- comment -%} Trellara — Collection Section {%- endcomment -%}
+
+<section class="trl-collection">
+  <div class="trl-container">
+    <h1>{{ collection.title }}</h1>
+
+    <div class="trl-collection__grid">
+      {%- for product in collection.products -%}
+        <a href="{{ product.url }}" class="trl-collection__item">
+          {%- if product.featured_image -%}
+            <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.featured_image.alt | escape }}" width="400" height="{{ 400 | divided_by: product.featured_image.aspect_ratio }}" loading="lazy">
+          {%- endif -%}
+          <p class="trl-collection__item-title">{{ product.title }}</p>
+          <p class="trl-collection__item-price">{{ product.price | money }}</p>
+        </a>
+      {%- else -%}
+        <p>No products found in this collection.</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {{ paginate | default_pagination }}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+{
+  "general": {
+    "search": {
+      "search": "Search",
+      "placeholder": "Search..."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty.",
+      "continue_shopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "update": "Update Cart",
+      "checkout": "Checkout"
+    }
+  },
+  "404": {
+    "title": "404 — Page Not Found",
+    "subtext": "The page you're looking for doesn't exist."
+  }
+}

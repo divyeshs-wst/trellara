@@ -1,0 +1,41 @@
+{%- comment -%} Trellara — Footer Section {%- endcomment -%}
+
+<footer class="trl-footer">
+  <div class="trl-container trl-footer__inner">
+    <div class="trl-footer__col">
+      <p class="trl-footer__text">{{ section.settings.footer_text | default: shop.name }}</p>
+    </div>
+
+    <nav class="trl-footer__col">
+      <ul class="trl-footer__menu">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="trl-footer__col trl-footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "Powered by Trellara"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer Menu",
+      "default": "footer"
+    }
+  ]
+}
+{% endschema %}

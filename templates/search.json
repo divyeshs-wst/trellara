@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "trl-search",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

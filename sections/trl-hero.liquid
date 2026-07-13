@@ -1,0 +1,29 @@
+{%- comment -%} Trellara — Hero Section (homepage) {%- endcomment -%}
+
+<section class="trl-hero" style="{% if section.settings.bg_image %}background-image: url('{{ section.settings.bg_image | image_url }}');{% endif %}">
+  <div class="trl-container trl-hero__inner">
+    <h1 class="trl-hero__heading">{{ section.settings.heading | default: 'Welcome to our store' }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="trl-hero__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_url | default: '#' }}" class="trl-button">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Welcome to our store" },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    { "type": "image_picker", "id": "bg_image", "label": "Background Image" },
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Shop Now" },
+    { "type": "url", "id": "button_url", "label": "Button Link" }
+  ],
+  "presets": [
+    { "name": "Hero" }
+  ]
+}
+{% endschema %}

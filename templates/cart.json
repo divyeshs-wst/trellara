@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "trl-cart",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

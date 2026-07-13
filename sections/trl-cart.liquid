@@ -1,0 +1,43 @@
+{%- comment -%} Trellara — Cart Section {%- endcomment -%}
+
+<section class="trl-cart">
+  <div class="trl-container">
+    <h1>Your Cart</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <p>Your cart is empty.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="trl-button">Continue Shopping</a>
+    {%- else -%}
+      {%- form 'cart', cart -%}
+        <table class="trl-cart__table">
+          <thead>
+            <tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr>
+          </thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.price | money }}</td>
+                <td>
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                </td>
+                <td>{{ item.final_line_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        <p class="trl-cart__subtotal">Subtotal: {{ cart.total_price | money }}</p>
+        <button type="submit" name="update" class="trl-button">Update Cart</button>
+        <button type="submit" name="checkout" class="trl-button">Checkout</button>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

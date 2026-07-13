@@ -1,0 +1,34 @@
+{%- comment -%} Trellara — Search Section {%- endcomment -%}
+
+<section class="trl-search">
+  <div class="trl-container">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="trl-search__form">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search...">
+      <button type="submit" class="trl-button">Search</button>
+    </form>
+
+    {%- if search.performed -%}
+      <p>{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for "{{ search.terms }}"</p>
+
+      <div class="trl-search__results">
+        {%- for item in search.results -%}
+          <a href="{{ item.url }}" class="trl-search__item">
+            {%- if item.featured_image -%}
+              <img src="{{ item.featured_image | image_url: width: 300 }}" alt="{{ item.featured_image.alt | escape }}" width="300" height="{{ 300 | divided_by: item.featured_image.aspect_ratio }}" loading="lazy">
+            {%- endif -%}
+            <p>{{ item.title }}</p>
+          </a>
+        {%- else -%}
+          <p>No results found.</p>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": []
+}
+{% endschema %}

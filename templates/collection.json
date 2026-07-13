@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "trl-collection",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
