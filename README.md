@@ -27,13 +27,16 @@ trellara/
 │   ├── footer-group.json         → Section group referenced by theme.liquid
 │   ├── trl-header.liquid         → Basic header (logo, menu, search/account/cart icons)
 │   ├── trl-footer.liquid         → Basic footer (text, menu, copyright)
-│   ├── trl-hero.liquid           → Homepage hero banner
-│   ├── trl-404.liquid            → 404 page content
-│   ├── trl-page.liquid           → Standard page template content
-│   ├── trl-product.liquid        → Basic product page (image, price, variant picker, add to cart)
-│   ├── trl-collection.liquid     → Basic product grid with pagination
-│   ├── trl-cart.liquid           → Cart table with update/checkout
-│   └── trl-search.liquid         → Search form + results
+│   ├── trl-hero.liquid           → Homepage hero banner (placeholder, not part of widget system)
+│   ├── trl-404.liquid            → 404 page content (placeholder, not part of widget system)
+│   ├── trl-page.liquid           → Standard page template content (placeholder)
+│   ├── trl-product.liquid        → Basic product page (placeholder)
+│   ├── trl-collection.liquid     → Basic product grid (placeholder)
+│   ├── trl-cart.liquid           → Cart table (placeholder)
+│   ├── trl-search.liquid         → Search form + results (placeholder)
+│   └── trl-container.liquid      → ⭐ FIRST REAL WIDGET LIBRARY PIECE — Container/layout
+│                                    wrapper. Holds other widgets (blocks) inside it using
+│                                    flex-row, flex-column, or grid layout.
 └── templates/
     ├── index.json                → Homepage (uses trl-hero)
     ├── 404.json                  → 404 page (uses trl-404)
@@ -68,7 +71,15 @@ Keeping wrapper-level and content-level variables distinctly named (`--trl-wrapp
 
 ## Status: now viewable in the Shopify editor
 
-All previously-missing required pieces are now included: `trl-theme.css`/`trl-theme.js`, both section groups, basic header/footer/hero/404/page/product/collection/cart/search sections, all required templates, and a starter locale file. Re-upload this version and every page (Home, 404, product, collection, cart, search, and regular pages) should now render and show sections in the editor instead of the "this page doesn't have any sections" message.
+All previously-missing required pieces are now included: `trl-theme.css`/`trl-theme.js`, both section groups, basic header/footer/hero/404/page/product/collection/cart/search sections, all required templates, and a starter locale file. Every page (Home, 404, product, collection, cart, search, and regular pages) should now render and show sections in the editor instead of the "this page doesn't have any sections" message.
+
+## Widget Library Progress (Phase 2 — Structural Widgets)
+
+- [x] **Container** (`sections/trl-container.liquid`) — layout wrapper supporting flex-row, flex-column, and grid, with gap/align/justify/wrap controls, accepts any theme block as a child (`"blocks": [{ "type": "@theme" }]`)
+- [ ] Columns/Grid (dedicated column-count widget — Container's grid mode covers basic cases, but a dedicated widget with responsive per-device column controls is next)
+- [ ] Spacer
+
+To try Container: add a "Container" section anywhere in the page editor, then add your Button block inside it as a child.
 
 ## Still needed before this is a real, uploadable Theme Store submission
 

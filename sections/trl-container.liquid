@@ -1,0 +1,145 @@
+{%- comment -%}
+  Trellara Container Widget
+  ------------------------------------------------------------
+  The foundational layout wrapper. Every other widget (Button,
+  Icon, Image Box, etc.) gets placed INSIDE a Container.
+
+  Two layers, same pattern as Button:
+  1. Container-specific Style: layout direction, gap, alignment, wrap
+  2. Global Wrapper Settings: Class, ID, Display, Size, Spacing,
+     Background, Border, Custom CSS (via trl-global-settings.liquid)
+
+  Child widgets are added as Theme Blocks (the modern Shopify
+  pattern) — any block file in /blocks/ can be dropped inside,
+  matching how trl-button.liquid already works.
+{%- endcomment -%}
+
+{%- liquid
+  assign layout_type = section.settings.trl_layout_type | default: 'flex-row'
+  assign gap = section.settings.trl_gap | default: 16
+  assign align_items = section.settings.trl_align_items | default: 'stretch'
+  assign justify_content = section.settings.trl_justify_content | default: 'flex-start'
+  assign wrap = section.settings.trl_wrap
+
+  case layout_type
+    when 'flex-row'
+      assign display_mode = 'flex'
+      assign flex_direction = 'row'
+    when 'flex-column'
+      assign display_mode = 'flex'
+      assign flex_direction = 'column'
+    when 'grid'
+      assign display_mode = 'grid'
+      assign grid_columns = section.settings.trl_grid_columns | default: 3
+  endcase
+-%}
+
+{%- capture widget_content -%}
+  <div
+    class="trl-container__inner"
+    style="
+      display: {{ display_mode }};
+      {% if display_mode == 'flex' %}
+        flex-direction: {{ flex_direction }};
+        flex-wrap: {% if wrap %}wrap{% else %}nowrap{% endif %};
+        align-items: {{ align_items }};
+        justify-content: {{ justify_content }};
+      {% endif %}
+      {% if display_mode == 'grid' %}
+        grid-template-columns: repeat({{ grid_columns }}, 1fr);
+        align-items: {{ align_items }};
+      {% endif %}
+      gap: {{ gap }}px;
+    "
+  >
+    {%- content_for 'blocks' -%}
+  </div>
+{%- endcapture -%}
+
+{% render 'trl-global-settings', section: section, content: widget_content %}
+
+{% schema %}
+{
+  "name": "Container",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "trl_layout_type",
+      "label": "Layout Type",
+      "options": [
+        { "value": "flex-row", "label": "Row (horizontal)" },
+        { "value": "flex-column", "label": "Column (vertical)" },
+        { "value": "grid", "label": "Grid" }
+      ],
+      "default": "flex-row"
+    },
+    {
+      "type": "range",
+      "id": "trl_grid_columns",
+      "label": "Grid Columns",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "info": "Only applies when Layout Type is Grid"
+    },
+    {
+      "type": "range",
+      "id": "trl_gap",
+      "label": "Gap Between Items",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "trl_align_items",
+      "label": "Align Items",
+      "options": [
+        { "value": "stretch", "label": "Stretch" },
+        { "value": "flex-start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "End" }
+      ],
+      "default": "stretch"
+    },
+    {
+      "type": "select",
+      "id": "trl_justify_content",
+      "label": "Justify Content",
+      "options": [
+        { "value": "flex-start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "End" },
+        { "value": "space-between", "label": "Space Between" },
+        { "value": "space-around", "label": "Space Around" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "checkbox",
+      "id": "trl_wrap",
+      "label": "Wrap items on smaller screens",
+      "default": true
+    }
+
+    /* NOTE: paste the contents of snippets/trl-global-schema.txt
+       here (after this line, as additional array items) so the
+       global wrapper settings show up in this widget's editor. */
+  ],
+  "blocks": [
+    { "type": "@theme" }
+  ],
+  "presets": [
+    {
+      "name": "Container",
+      "settings": {
+        "trl_layout_type": "flex-row"
+      }
+    }
+  ]
+}
+{% endschema %}
