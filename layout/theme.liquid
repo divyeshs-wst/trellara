@@ -1,44 +1,36 @@
 <!doctype html>
-<html class="no-js" lang="{{ request.locale.iso_code }}">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="canonical" href="{{ canonical_url }}">
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
 
-  {%- if settings.favicon != blank -%}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-  {%- endif -%}
+    {% comment %}
+      Font preloading:
+      1. Preconnect to font CDN for faster connection
+      2. Preload only the critical font variant (base weight)
+      3. Additional variants load on-demand via @font-face
+    {% endcomment %}
+    {% unless settings.type_primary_font.system? %}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
-  <title>
-    {{ page_title }}
-    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-  </title>
+      {% comment %} Preload the base font variant for initial page render {% endcomment %}
+      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {% endunless %}
 
-  {%- if page_description -%}
-    <meta name="description" content="{{ page_description | escape }}">
-  {%- endif -%}
+    {% # Load and preload the critical CSS %}
+    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
 
-  {{ content_for_header }}
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
 
-  {{ 'trl-engine.css' | asset_url | stylesheet_tag }}
-  {{ 'trl-theme.css' | asset_url | stylesheet_tag }}
-</head>
+    {{ content_for_header }}
+  </head>
 
-<body class="template-{{ request.page_type }}">
+  <body>
+    {% sections 'header-group' %}
 
-  <a class="trl-skip-link visually-hidden" href="#trl-main-content">Skip to content</a>
-
-  {% sections 'header-group' %}
-
-  <main id="trl-main-content" role="main">
     {{ content_for_layout }}
-  </main>
 
-  {% sections 'footer-group' %}
-
-  {{ 'trl-theme.js' | asset_url | script_tag }}
-</body>
+    {% sections 'footer-group' %}
+  </body>
 </html>

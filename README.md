@@ -1,93 +1,160 @@
-# Trellara — Starter Theme Skeleton
+<h1 align="center" style="position: relative;">
+  <br>
+    <img src="./assets/shoppy-x-ray.svg" alt="logo" width="200">
+  <br>
+  Trellara Theme
+</h1>
 
-Foundation files for the **Trellara** custom Shopify theme, built by Wisdom Square Technologies.
+A minimal, carefully structured Shopify theme designed to help you quickly get started. Designed with modularity, maintainability, and Shopify's best practices in mind.
 
-## What's included
+<p align="center">
+  <a href="./LICENSE.md"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
+  <a href="./actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Shopify/skeleton-theme/actions/workflows/ci.yml/badge.svg"></a>
+</p>
 
-```
-trellara/
-├── layout/
-│   └── theme.liquid              → Main HTML shell, loads engine CSS + theme CSS/JS
-├── config/
-│   ├── settings_schema.json      → Global theme settings (colors, fonts, layout width)
-│   └── settings_data.json        → Default values for the above
-├── assets/
-│   └── trl-engine.css            → Core CSS custom properties (colors, spacing, radius, shadows)
-├── snippets/
-│   ├── trl-global-settings.liquid → Shared wrapper renderer (Class, ID, Display, Size,
-│   │                                Spacing, Background, Border, Custom CSS)
-│   └── trl-global-schema.txt     → Copy-paste schema block for the settings above —
-│                                    paste into every widget's schema "settings" array
-│                                    (kept as .txt, not .json, since it has comments in it
-│                                    and is never loaded directly by Shopify)
-├── blocks/
-│   └── trl-button.liquid         → First working widget, shows the full pattern in use
-├── sections/
-│   ├── header-group.json         → Section group referenced by theme.liquid
-│   ├── footer-group.json         → Section group referenced by theme.liquid
-│   ├── trl-header.liquid         → Basic header (logo, menu, search/account/cart icons)
-│   ├── trl-footer.liquid         → Basic footer (text, menu, copyright)
-│   ├── trl-hero.liquid           → Homepage hero banner (placeholder, not part of widget system)
-│   ├── trl-404.liquid            → 404 page content (placeholder, not part of widget system)
-│   ├── trl-page.liquid           → Standard page template content (placeholder)
-│   ├── trl-product.liquid        → Basic product page (placeholder)
-│   ├── trl-collection.liquid     → Basic product grid (placeholder)
-│   ├── trl-cart.liquid           → Cart table (placeholder)
-│   ├── trl-search.liquid         → Search form + results (placeholder)
-│   └── trl-container.liquid      → ⭐ FIRST REAL WIDGET LIBRARY PIECE — Container/layout
-│                                    wrapper. Holds other widgets (blocks) inside it using
-│                                    flex-row, flex-column, or grid layout.
-└── templates/
-    ├── index.json                → Homepage (uses trl-hero)
-    ├── 404.json                  → 404 page (uses trl-404)
-    ├── page.json                 → Standard pages (uses trl-page)
-    ├── product.json              → Product page (uses trl-product)
-    ├── collection.json           → Collection page (uses trl-collection)
-    ├── cart.json                 → Cart page (uses trl-cart)
-    └── search.json               → Search page (uses trl-search)
+## Getting started
+
+### Prerequisites
+
+Before starting, ensure you have the latest Shopify CLI installed:
+
+- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) – helps you download, upload, preview themes, and streamline your workflows
+
+If you use VS Code:
+
+- [Shopify Liquid VS Code Extension](https://shopify.dev/docs/storefronts/themes/tools/shopify-liquid-vscode) – provides syntax highlighting, linting, inline documentation, and auto-completion specifically designed for Liquid templates
+
+### Clone
+
+Clone this repository using Git or Shopify CLI:
+
+```bash
+git clone git@github.com:Shopify/skeleton-theme.git
+# or
+shopify theme init
 ```
 
-## How the pattern works (per our earlier discussion)
+### Preview
 
-Every widget has **two layers**:
+Preview this theme using Shopify CLI:
 
-1. **Widget-specific Style** — lives directly in the widget's own `{% schema %}` and Liquid markup (e.g. Button's label color, hover color). This is unique per widget.
-2. **Global Wrapper Settings** — Class, ID, Display, Size, Spacing, Background, Border, Custom CSS. Built ONCE in `trl-global-settings.liquid` + `trl-global-schema.json`, reused by every widget.
-
-**To build a new widget:**
-1. Copy `blocks/trl-button.liquid` as a starting template.
-2. Replace the widget-specific settings/markup with your own (Section 1–7 categories from our reference doc).
-3. Copy the contents of `snippets/trl-global-schema.json` into the widget's own `settings` array (marked with a comment in `trl-button.liquid` showing where).
-4. Wrap your widget's captured content through `{% render 'trl-global-settings', block: block, content: widget_content %}` — same as Button does.
-
-## Naming convention (locked in per our discussion)
-
+```bash
+shopify theme dev
 ```
---trl-{scope}-{property}-{state}
+
+## Theme architecture
+
+```bash
+.
+├── assets          # Stores static assets (CSS, JS, images, fonts, etc.)
+├── blocks          # Reusable, nestable, customizable UI components
+├── config          # Global theme settings and customization options
+├── layout          # Top-level wrappers for pages (layout templates)
+├── locales         # Translation files for theme internationalization
+├── sections        # Modular full-width page components
+├── snippets        # Reusable Liquid code or HTML fragments
+└── templates       # Templates combining sections to define page structures
 ```
-Examples: `--trl-button-bg-hover`, `--trl-wrapper-bg`, `--trl-icon-color`
 
-Keeping wrapper-level and content-level variables distinctly named (`--trl-wrapper-bg` vs `--trl-button-bg`) avoids the kind of variable collision that caused the earlier margin left/right swap bug.
+To learn more, refer to the [theme architecture documentation](https://shopify.dev/docs/storefronts/themes/architecture).
 
-## Status: now viewable in the Shopify editor
+### Templates
 
-All previously-missing required pieces are now included: `trl-theme.css`/`trl-theme.js`, both section groups, basic header/footer/hero/404/page/product/collection/cart/search sections, all required templates, and a starter locale file. Every page (Home, 404, product, collection, cart, search, and regular pages) should now render and show sections in the editor instead of the "this page doesn't have any sections" message.
+[Templates](https://shopify.dev/docs/storefronts/themes/architecture/templates#template-types) control what's rendered on each type of page in a theme.
 
-## Widget Library Progress (Phase 2 — Structural Widgets)
+The Trellara Theme scaffolds [JSON templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates) to make it easy for merchants to customize their store.
 
-- [x] **Container** (`sections/trl-container.liquid`) — layout wrapper supporting flex-row, flex-column, and grid, with gap/align/justify/wrap controls, accepts any theme block as a child (`"blocks": [{ "type": "@theme" }]`)
-- [ ] Columns/Grid (dedicated column-count widget — Container's grid mode covers basic cases, but a dedicated widget with responsive per-device column controls is next)
-- [ ] Spacer
+None of the template types are required, and not all of them are included in the Trellara Theme. Refer to the [template types reference](https://shopify.dev/docs/storefronts/themes/architecture/templates#template-types) for a full list.
 
-To try Container: add a "Container" section anywhere in the page editor, then add your Button block inside it as a child.
+### Sections
 
-## Still needed before this is a real, uploadable Theme Store submission
+[Sections](https://shopify.dev/docs/storefronts/themes/architecture/sections) are Liquid files that allow you to create reusable modules of content that can be customized by merchants. They can also include blocks which allow merchants to add, remove, and reorder content within a section.
 
-- [ ] Core structural widgets: Section/Container, Columns/Grid, Spacer (so the ~50-widget library can actually be dropped into these page templates)
-- [ ] Replace placeholder header/footer/hero styling with real design system values
-- [ ] Expand `locales/en.default.json` — current version is a minimal starter, not full translation coverage
-- [ ] Run `theme-check` CLI before any Theme Store submission
-- [ ] Add remaining widgets from the reference doc, following the Button pattern
+Sections are made customizable by including a `{% schema %}` in the body. For more information, refer to the [section schema documentation](https://shopify.dev/docs/storefronts/themes/architecture/sections/section-schema).
 
-## Build order (recap)
-Phase 1 (this skeleton) → Phase 2 (Section/Columns/Spacer) → Phase 3 (one widget per pattern: text-only, icon+text, image+text, repeater, store-data) → Phase 4 (remaining ~45 widgets in groups) → Phase 5 (header/footer/cart/product/collection pages) → Phase 6 (Theme Store requirements).
+### Blocks
+
+[Blocks](https://shopify.dev/docs/storefronts/themes/architecture/blocks) let developers create flexible layouts by breaking down sections into smaller, reusable pieces of Liquid. Each block has its own set of settings, and can be added, removed, and reordered within a section.
+
+Blocks are made customizable by including a `{% schema %}` in the body. For more information, refer to the [block schema documentation](https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/schema).
+
+## Schemas
+
+When developing components defined by schema settings, we recommend these guidelines to simplify your code:
+
+- **Single property settings**: For settings that correspond to a single CSS property, use CSS variables:
+
+  ```liquid
+  <div class="collection" style="--gap: {{ block.settings.gap }}px">
+    ...
+  </div>
+
+  {% stylesheet %}
+    .collection {
+      gap: var(--gap);
+    }
+  {% endstylesheet %}
+
+  {% schema %}
+  {
+    "settings": [{
+      "type": "range",
+      "label": "gap",
+      "id": "gap",
+      "min": 0,
+      "max": 100,
+      "unit": "px",
+      "default": 0,
+    }]
+  }
+  {% endschema %}
+  ```
+
+- **Multiple property settings**: For settings that control multiple CSS properties, use CSS classes:
+
+  ```liquid
+  <div class="collection {{ block.settings.layout }}">
+    ...
+  </div>
+
+  {% stylesheet %}
+    .collection--full-width {
+      /* multiple styles */
+    }
+    .collection--narrow {
+      /* multiple styles */
+    }
+  {% endstylesheet %}
+
+  {% schema %}
+  {
+    "settings": [{
+      "type": "select",
+      "id": "layout",
+      "label": "layout",
+      "values": [
+        { "value": "collection--full-width", "label": "t:options.full" },
+        { "value": "collection--narrow", "label": "t:options.narrow" }
+      ]
+    }]
+  }
+  {% endschema %}
+  ```
+
+## CSS & JavaScript
+
+For CSS and JavaScript, we recommend using the [`{% stylesheet %}`](https://shopify.dev/docs/api/liquid/tags#stylesheet) and [`{% javascript %}`](https://shopify.dev/docs/api/liquid/tags/javascript) tags. They can be included multiple times, but the code will only appear once.
+
+### `critical.css`
+
+The Trellara Theme explicitly separates essential CSS necessary for every page into a dedicated `critical.css` file.
+
+## Contributing
+
+We're excited for your contributions to the Trellara Theme! This repository aims to remain as lean, lightweight, and fundamental as possible, and we kindly ask your contributions to align with this intention.
+
+Visit our [CONTRIBUTING.md](./CONTRIBUTING.md) for a detailed overview of our process, guidelines, and recommendations.
+
+## License
+
+Trellara Theme is open-sourced under the [MIT](./LICENSE.md) License.

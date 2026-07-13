@@ -1,14 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "current": "Default",
-  "presets": {
-    "Default": {
-      "color_primary": "#1a1a2e",
-      "color_secondary": "#e94560",
-      "color_text": "#222222",
-      "color_background": "#ffffff",
-      "font_heading": "poppins_n4",
-      "font_body": "inter_n4",
-      "page_width": 1440
-    }
-  }
+  "current": {}
 }
