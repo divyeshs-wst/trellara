@@ -4,6 +4,12 @@
   Demonstrates the pattern every widget should follow:
   1. Capture the widget's own content/markup (Section 8 - unique style)
   2. Render it through the shared global wrapper (Section 9 - global style)
+
+  NOTE: paste the contents of snippets/trl-global-schema.txt into
+  the "settings" array below (as additional array items) so the
+  global wrapper settings show up in this widget's editor. Do NOT
+  put that note inside the schema JSON itself — JSON doesn't
+  support comments, and it will break the whole block's schema.
 {%- endcomment -%}
 
 {%- liquid
@@ -45,10 +51,6 @@
     { "type": "color", "id": "trl_button_bg_color_hover", "label": "Background Color (Hover)", "default": "#0f3460" },
     { "type": "color", "id": "trl_button_text_color", "label": "Text Color", "default": "#ffffff" },
     { "type": "range", "id": "trl_button_border_radius", "label": "Border Radius", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 4 }
-
-    /* NOTE: paste the contents of snippets/trl-global-schema.txt
-       here (after this line, as additional array items) so the
-       global wrapper settings show up in this widget's editor. */
   ]
 }
 {% endschema %}
