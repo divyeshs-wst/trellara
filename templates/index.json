@@ -39,10 +39,21 @@
                     "alignment": "left"
                   },
                   "blocks": {}
+                },
+                "text_6wazAT": {
+                  "type": "text",
+                  "name": "t:general.text",
+                  "settings": {
+                    "text": "This is Text 1.",
+                    "text_style": "text--title",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
-                "text_P7MJyi"
+                "text_P7MJyi",
+                "text_6wazAT"
               ]
             },
             "group_tTNhpb": {
