@@ -9,100 +9,83 @@
  */
 {
   "sections": {
-    "custom_section_JJ8zGJ": {
-      "type": "custom-section",
+    "custom_section_mc3TCa": {
+      "type": "section",
       "blocks": {
-        "group_mTwxK3": {
+        "group_RcBFhL": {
           "type": "group",
-          "name": "t:general.row",
+          "name": "t:general.column",
           "settings": {
-            "layout_direction": "group--horizontal",
+            "layout_direction": "group--vertical",
             "alignment": "flex-start",
             "padding": 0
           },
           "blocks": {
-            "group_tQfTTt": {
-              "type": "group",
-              "name": "t:general.column",
+            "text_QWqbeG": {
+              "type": "text",
+              "name": "t:general.text",
               "settings": {
-                "layout_direction": "group--vertical",
-                "alignment": "center",
-                "padding": 0
+                "text": "This is Dummy Text 1.",
+                "text_style": "text--title",
+                "alignment": "left"
               },
-              "blocks": {
-                "text_P7MJyi": {
-                  "type": "text",
-                  "name": "t:general.text",
-                  "settings": {
-                    "text": "This is Text 1.",
-                    "text_style": "text--title",
-                    "alignment": "left"
-                  },
-                  "blocks": {}
-                },
-<<<<<<< HEAD
-                "text_RXNUih": {
-=======
-                "text_6wazAT": {
->>>>>>> 6e8ad17bd1e7c5ca5d962fd2cab5d35c28799989
-                  "type": "text",
-                  "name": "t:general.text",
-                  "settings": {
-                    "text": "This is Text 1.",
-                    "text_style": "text--title",
-                    "alignment": "left"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_P7MJyi",
-<<<<<<< HEAD
-                "text_RXNUih"
-=======
-                "text_6wazAT"
->>>>>>> 6e8ad17bd1e7c5ca5d962fd2cab5d35c28799989
-              ]
+              "blocks": {}
             },
-            "group_tTNhpb": {
-              "type": "group",
-              "name": "t:general.column",
+            "text_6Pzp7B": {
+              "type": "text",
+              "name": "t:general.text",
               "settings": {
-                "layout_direction": "group--vertical",
-                "alignment": "center",
-                "padding": 0
+                "text": "This is Dummy Text 1.",
+                "text_style": "text--title",
+                "alignment": "left"
               },
-              "blocks": {
-                "text_LwWpJt": {
-                  "type": "text",
-                  "name": "t:general.text",
-                  "settings": {
-                    "text": "This is Text 2.",
-                    "text_style": "text--title",
-                    "alignment": "left"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_LwWpJt"
-              ]
+              "blocks": {}
             }
           },
           "block_order": [
-            "group_tQfTTt",
-            "group_tTNhpb"
+            "text_QWqbeG",
+            "text_6Pzp7B"
+          ]
+        },
+        "group_pVEPxn": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "center",
+            "padding": 0
+          },
+          "blocks": {
+            "text_qtBEdd": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "This is Dummy Text 2.",
+                "text_style": "text--title",
+                "alignment": "left"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_qtBEdd"
           ]
         }
       },
       "block_order": [
-        "group_mTwxK3"
+        "group_RcBFhL",
+        "group_pVEPxn"
       ],
-      "name": "t:general.custom_section",
-      "settings": {}
+      "name": "Row",
+      "settings": {
+        "layout": "flex",
+        "html_tag": "section",
+        "content_width": "boxed",
+        "content_max_width": 1200
+      }
     }
   },
   "order": [
-    "custom_section_JJ8zGJ"
+    "custom_section_mc3TCa"
   ]
 }

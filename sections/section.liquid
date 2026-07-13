@@ -1,0 +1,149 @@
+{%- liquid
+  assign settings = block.settings
+  assign tag = settings.html_tag | default: 'div'
+
+  # Modifier classes for layout behavior
+  assign row_classes = ''
+  if settings.layout == 'grid'
+    assign row_classes = row_classes | append: ' wst-row--grid'
+  endif
+  if settings.stack_on_mobile
+    assign row_classes = row_classes | append: ' wst-row--stack'
+  endif
+
+  # Inner container, boxed or full width
+  assign inner_class = 'wst-row__inner'
+  if settings.content_width == 'boxed'
+    assign inner_class = inner_class | append: ' wst-row__inner--boxed'
+  endif
+
+  # Widget specific style variables, passed to wst-attributes
+  capture row_vars
+    if settings.layout == 'grid'
+      echo '--wst-cols: ' | append: settings.grid_columns | append: ';'
+      echo '--wst-cols-m: ' | append: settings.grid_columns_mobile | append: ';'
+    else
+      echo '--wst-direction: ' | append: settings.direction | append: ';'
+      if settings.wrap
+        echo '--wst-flex-wrap: wrap;'
+      endif
+    endif
+    echo '--wst-justify: ' | append: settings.justify | append: ';'
+    echo '--wst-align-items: ' | append: settings.align_items | append: ';'
+    if settings.gap_row > 0
+      echo '--wst-gap-row: ' | append: settings.gap_row | append: 'px;'
+    endif
+    if settings.gap_column > 0
+      echo '--wst-gap-col: ' | append: settings.gap_column | append: 'px;'
+    endif
+    if settings.content_width == 'boxed'
+      echo '--wst-content-width: ' | append: settings.content_max_width | append: 'px;'
+    endif
+    if settings.min_height_type == 'custom'
+      echo '--wst-min-h: ' | append: settings.min_height | append: 'px;'
+    elsif settings.min_height_type == 'screen'
+      echo '--wst-min-h: 100svh;'
+    endif
+  endcapture
+-%}
+
+<{{ tag }} class="wst-row{{ row_classes }}" style="{{ row_vars | strip }}">
+  {% if section.settings.background_image %}
+    <div class="tr-section__background">
+      {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
+    </div>
+  {% endif %}
+  <div class="tr_row">
+    {% content_for 'blocks' %}
+  </div>
+</{{tag}}>
+
+{% schema %}
+{
+  "name": "Row",
+  "blocks": [{ "type": "@theme" }],
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "flex",
+          "label": "Flexible"
+        },
+        {
+          "value": "grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "flex"
+    },
+    {
+      "type": "select",
+      "id": "html_tag",
+      "label": "HTML tag",
+      "options": [
+        {
+          "value": "div",
+          "label": "Div"
+        },
+        {
+          "value": "section",
+          "label": "Section"
+        },
+        {
+          "value": "header",
+          "label": "Header"
+        },
+        {
+          "value": "footer",
+          "label": "Footer"
+        },
+        {
+          "value": "aside",
+          "label": "Aside"
+        }
+      ],
+      "default": "div"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Boxed maximum width",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1200,
+      "visible_if": "{{ block.settings.content_width == 'boxed' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Row"
+    }
+  ]
+}
+{% endschema %}
