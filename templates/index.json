@@ -40,7 +40,11 @@
                   },
                   "blocks": {}
                 },
+<<<<<<< HEAD
                 "text_RXNUih": {
+=======
+                "text_6wazAT": {
+>>>>>>> 6e8ad17bd1e7c5ca5d962fd2cab5d35c28799989
                   "type": "text",
                   "name": "t:general.text",
                   "settings": {
@@ -53,7 +57,11 @@
               },
               "block_order": [
                 "text_P7MJyi",
+<<<<<<< HEAD
                 "text_RXNUih"
+=======
+                "text_6wazAT"
+>>>>>>> 6e8ad17bd1e7c5ca5d962fd2cab5d35c28799989
               ]
             },
             "group_tTNhpb": {
