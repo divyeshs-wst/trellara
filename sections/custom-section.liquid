@@ -4,10 +4,11 @@
       {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
     </div>
   {% endif %}
-
-  <div class="custom-section__content">
-    {% content_for 'blocks' %}
-  </div>
+{
+  "name": "t:general.custom_section",
+  "tag": null,
+  "settings": []
+}
 </div>
 
 {% stylesheet %}
