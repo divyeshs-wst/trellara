@@ -4,12 +4,7 @@
       {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
     </div>
   {% endif %}
-{
-  "name": "t:general.custom_section",
-  "tag": null,
-  "settings": []
-}
-</div>
+  </div>
 
 {% stylesheet %}
   .custom-section {
@@ -44,6 +39,7 @@
 {% schema %}
 {
   "name": "t:general.custom_section",
+  "tag": null,
   "blocks": [{ "type": "@theme" }],
   "settings": [
     {
