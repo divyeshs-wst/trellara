@@ -9,12 +9,81 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "custom_section_JJ8zGJ": {
+      "type": "custom-section",
+      "blocks": {
+        "group_mTwxK3": {
+          "type": "group",
+          "name": "t:general.row",
+          "settings": {
+            "layout_direction": "group--horizontal",
+            "alignment": "flex-start",
+            "padding": 0
+          },
+          "blocks": {
+            "group_tQfTTt": {
+              "type": "group",
+              "name": "t:general.column",
+              "settings": {
+                "layout_direction": "group--vertical",
+                "alignment": "center",
+                "padding": 0
+              },
+              "blocks": {
+                "text_P7MJyi": {
+                  "type": "text",
+                  "name": "t:general.text",
+                  "settings": {
+                    "text": "Text",
+                    "text_style": "text--title",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_P7MJyi"
+              ]
+            },
+            "group_tTNhpb": {
+              "type": "group",
+              "name": "t:general.column",
+              "settings": {
+                "layout_direction": "group--vertical",
+                "alignment": "center",
+                "padding": 0
+              },
+              "blocks": {
+                "text_LwWpJt": {
+                  "type": "text",
+                  "name": "t:general.text",
+                  "settings": {
+                    "text": "Text",
+                    "text_style": "text--title",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_LwWpJt"
+              ]
+            }
+          },
+          "block_order": [
+            "group_tQfTTt",
+            "group_tTNhpb"
+          ]
+        }
+      },
+      "block_order": [
+        "group_mTwxK3"
+      ],
+      "name": "t:general.custom_section",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "custom_section_JJ8zGJ"
   ]
 }
