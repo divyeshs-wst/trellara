@@ -13,10 +13,25 @@
   "sections": {
     "header": {
       "type": "trl-header",
-      "settings": {}
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
+    "trl_container_9dRR39": {
+      "type": "trl-container",
+      "name": "Container",
+      "settings": {
+        "trl_layout_type": "flex-row",
+        "trl_grid_columns": 3,
+        "trl_gap": 16,
+        "trl_align_items": "stretch",
+        "trl_justify_content": "flex-start",
+        "trl_wrap": true
+      }
     }
   },
   "order": [
-    "header"
+    "header",
+    "trl_container_9dRR39"
   ]
 }
