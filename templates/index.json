@@ -34,7 +34,7 @@
                   "type": "text",
                   "name": "t:general.text",
                   "settings": {
-                    "text": "Text",
+                    "text": "This is Text 1.",
                     "text_style": "text--title",
                     "alignment": "left"
                   },
@@ -58,7 +58,7 @@
                   "type": "text",
                   "name": "t:general.text",
                   "settings": {
-                    "text": "Text",
+                    "text": "This is Text 2.",
                     "text_style": "text--title",
                     "alignment": "left"
                   },
