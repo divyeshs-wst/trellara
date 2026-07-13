@@ -67,6 +67,9 @@
 {% schema %}
 {
   "name": "Container",
+  "blocks": [
+    { "type": "@theme" }
+  ],
   "settings": [
     { "type": "header", "content": "Layout" },
     {
@@ -131,9 +134,6 @@
       "label": "Wrap items on smaller screens",
       "default": true
     }
-  ],
-  "blocks": [
-    { "type": "@theme" }
   ],
   "presets": [
     {
