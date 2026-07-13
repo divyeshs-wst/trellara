@@ -1,0 +1,79 @@
+{%- comment -%}
+  Trellara Global Wrapper Settings Snippet
+  ------------------------------------------
+  Renders CSS custom properties for the shared "wrapper" settings
+  that apply to EVERY widget (section or block), regardless of type.
+
+  Usage in a section/block schema:
+    {% render 'trl-global-settings', block: block %}
+    (or pass `section: section` if used at section level)
+
+  This snippet expects the following schema settings to exist on
+  whatever block/section includes it (see trl-global-schema.liquid
+  for the matching schema JSON to paste into each widget's schema).
+{%- endcomment -%}
+
+{%- liquid
+  assign obj = block | default: section
+  assign settings = obj.settings
+
+  assign css_class = settings.trl_css_class | default: ''
+  assign css_id = settings.trl_css_id | default: obj.id
+  assign display = settings.trl_display | default: 'block'
+
+  assign width = settings.trl_width
+  assign max_width = settings.trl_max_width
+  assign height = settings.trl_height
+
+  assign margin_top = settings.trl_margin_top | default: 0
+  assign margin_right = settings.trl_margin_right | default: 0
+  assign margin_bottom = settings.trl_margin_bottom | default: 0
+  assign margin_left = settings.trl_margin_left | default: 0
+
+  assign padding_top = settings.trl_padding_top | default: 0
+  assign padding_right = settings.trl_padding_right | default: 0
+  assign padding_bottom = settings.trl_padding_bottom | default: 0
+  assign padding_left = settings.trl_padding_left | default: 0
+
+  assign bg_color = settings.trl_bg_color
+  assign bg_image = settings.trl_bg_image
+
+  assign border_width = settings.trl_border_width | default: 0
+  assign border_color = settings.trl_border_color
+  assign border_radius = settings.trl_border_radius | default: 0
+
+  assign custom_css = settings.trl_custom_css
+-%}
+
+<div
+  id="trl-{{ css_id }}"
+  class="trl-widget-wrapper {{ css_class }}"
+  style="
+    display: {{ display }};
+    {% if width %}width: {{ width }};{% endif %}
+    {% if max_width %}max-width: {{ max_width }};{% endif %}
+    {% if height %}height: {{ height }};{% endif %}
+    --trl-margin: {{ margin_top }}px {{ margin_right }}px {{ margin_bottom }}px {{ margin_left }}px;
+    --trl-padding: {{ padding_top }}px {{ padding_right }}px {{ padding_bottom }}px {{ padding_left }}px;
+    margin: var(--trl-margin);
+    padding: var(--trl-padding);
+    {% if bg_color %}--trl-wrapper-bg: {{ bg_color }};{% endif %}
+    {% if bg_image %}--trl-wrapper-bg-image: url('{{ bg_image | image_url }}');{% endif %}
+    background-color: var(--trl-wrapper-bg, transparent);
+    {% if bg_image %}background-image: var(--trl-wrapper-bg-image); background-size: cover; background-position: center;{% endif %}
+    border-width: {{ border_width }}px;
+    {% if border_color %}border-color: {{ border_color }};{% endif %}
+    border-style: {% if border_width > 0 %}solid{% else %}none{% endif %};
+    border-radius: {{ border_radius }}px;
+  "
+>
+  {{ content }}
+</div>
+
+{%- if custom_css != blank -%}
+  <style>
+    #trl-{{ css_id }} {
+      {{ custom_css }}
+    }
+  </style>
+{%- endif -%}

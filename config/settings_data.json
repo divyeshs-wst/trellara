@@ -1,0 +1,14 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_primary": "#1a1a2e",
+      "color_secondary": "#e94560",
+      "color_text": "#222222",
+      "color_background": "#ffffff",
+      "font_heading": "poppins_n4",
+      "font_body": "inter_n4",
+      "page_width": 1440
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{%- comment -%}
+  Trellara Button Widget
+  ------------------------------------------------------------
+  Demonstrates the pattern every widget should follow:
+  1. Capture the widget's own content/markup (Section 8 - unique style)
+  2. Render it through the shared global wrapper (Section 9 - global style)
+{%- endcomment -%}
+
+{%- liquid
+  assign label = block.settings.trl_button_label | default: 'Click Me'
+  assign url = block.settings.trl_button_url | default: '#'
+  assign bg_color = block.settings.trl_button_bg_color | default: '#1a1a2e'
+  assign bg_color_hover = block.settings.trl_button_bg_color_hover | default: '#0f3460'
+  assign text_color = block.settings.trl_button_text_color | default: '#ffffff'
+  assign border_radius = block.settings.trl_button_border_radius | default: 4
+-%}
+
+{%- capture widget_content -%}
+  <a
+    href="{{ url }}"
+    class="trl-button"
+    style="
+      --trl-button-bg: {{ bg_color }};
+      --trl-button-bg-hover: {{ bg_color_hover }};
+      --trl-button-text: {{ text_color }};
+      --trl-button-radius: {{ border_radius }}px;
+    "
+  >
+    {{ label }}
+  </a>
+{%- endcapture -%}
+
+{% render 'trl-global-settings', block: block, content: widget_content %}
+
+{% schema %}
+{
+  "name": "Button",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "trl_button_label", "label": "Label", "default": "Click Me" },
+    { "type": "url", "id": "trl_button_url", "label": "Link" },
+
+    { "type": "header", "content": "Button Style" },
+    { "type": "color", "id": "trl_button_bg_color", "label": "Background Color", "default": "#1a1a2e" },
+    { "type": "color", "id": "trl_button_bg_color_hover", "label": "Background Color (Hover)", "default": "#0f3460" },
+    { "type": "color", "id": "trl_button_text_color", "label": "Text Color", "default": "#ffffff" },
+    { "type": "range", "id": "trl_button_border_radius", "label": "Border Radius", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 4 }
+
+    /* NOTE: paste the contents of snippets/trl-global-schema.json
+       here (after this line, as additional array items) so the
+       global wrapper settings show up in this widget's editor. */
+  ]
+}
+{% endschema %}
